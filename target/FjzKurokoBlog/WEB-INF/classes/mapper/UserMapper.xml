@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：该mapper.xml映射文件的唯一标识 -->
+<mapper namespace="xyz.fjzkuroko.dao.UserDao">
+    <!-- 登录 -->
+    <select id="login" parameterType="User" resultType="User">
+        select * from user where username = #{username} and password = #{password}
+    </select>
+    <!-- 注册 -->
+    <insert id="register" parameterType="User">
+        insert into user (username, sex, password, email, info, avatar, registerTime)
+            values (#{username}, #{sex}, #{password}, #{email}, #{info}, #{avatar}, #{registerTime})
+    </insert>
+    <!-- 根据username查询用户 -->
+    <select id="selectByUsername" parameterType="String" resultType="User">
+        select * from user where username = #{username}
+    </select>
+</mapper>
