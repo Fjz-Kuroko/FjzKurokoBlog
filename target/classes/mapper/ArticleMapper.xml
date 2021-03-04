@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：该mapper.xml映射文件的唯一标识 -->
+<mapper namespace="xyz.fjzkuroko.dao.ArticleDao">
+    <select id="selectAllArticle" resultType="Article">
+        select * from article
+    </select>
+    <select id="selectAllAid" parameterType="String" resultType="Article">
+        select aid from article
+        <if test="_parameter != null">
+            where (author like concat('%', #{_parameter}, '%') or title like concat('%', #{_parameter}, '%')
+                    or content like concat('%', #{_parameter}, '%') or articleBrief like concat('%', #{_parameter}, '%'))
+        </if>
+    </select>
+    <select id="selectArticleByAid" parameterType="Integer" resultType="Article">
+        select * from article where aid = #{aid}
+    </select>
+    <select id="selectArticleCommentNumTop4" resultType="xyz.fjzkuroko.vo.ViewAlertCard">
+        select a.aid, CONCAT_WS('--', a.title, a.articleBrief) content, a.articleTime, (
+                (select count(*) from comment c where c.aid = a.aid)
+                + (select count(*) from reply, comment where reply.cid = comment.cid and comment.aid = a.aid)
+            ) commentNum
+        from article a order by commentNum desc limit 4
+    </select>
+    <select id="selectArticleArchives" resultType="xyz.fjzkuroko.vo.ViewArticle">
+        select a.aid, a.author, a.title, a.label, l.label as category, a.articleTime, upper(a.tags) as tags
+        from article a, labels l
+        where a.label = l.lid
+        ORDER BY articleTime DESC
+    </select>
+    <select id="selectAidByLabel" resultType="Article">
+        select aid from article where label = #{label}
+    </select>
+</mapper>

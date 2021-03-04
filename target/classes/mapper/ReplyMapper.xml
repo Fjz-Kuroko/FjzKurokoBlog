@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：该mapper.xml映射文件的唯一标识 -->
+<mapper namespace="xyz.fjzkuroko.dao.ReplyDao">
+
+    <resultMap id="childCommentMap" type="xyz.fjzkuroko.vo.ChildComment">
+        <id property="id" column="rid" />
+        <result property="content" column="content" />
+        <result property="createDate" column="createDate" />
+        <association property="commentUser" column="username" javaType="xyz.fjzkuroko.vo.CommentUser"
+                     select="xyz.fjzkuroko.dao.UserDao.selectCommentUserByUsername" />
+        <association property="targetUser" column="cusername" javaType="xyz.fjzkuroko.vo.CommentUser"
+                     select="xyz.fjzkuroko.dao.UserDao.selectCommentUserByUsername" />
+    </resultMap>
+    <!-- 根据 -->
+    <select id="getChildCommentsByCid" parameterType="Integer" resultMap="childCommentMap">
+        select rid, cid, cusername, username, content, createDate from reply where cid = #{cid}
+    </select>
+
+    <select id="getReplyNumByAid" parameterType="Integer" resultType="Integer">
+        select count(rid) from reply r, comment c where r.cid = c.cid and c.aid = #{aid}
+    </select>
+
+    <select id="getMaxReplyId" resultType="Integer">
+        select max(rid + 0) from reply
+    </select>
+    
+    <insert id="addReply" parameterType="Reply">
+        insert into reply (rid, cid, cusername, username, content, createDate)
+                values (#{rid}, #{cid}, #{cusername}, #{username}, #{content}, #{createDate});
+    </insert>
+</mapper>
