@@ -17,7 +17,7 @@ import java.util.Objects;
 public class JWTUtil {
 
      // token加密时使用的秘钥，一旦得到此秘钥也就可以伪造token了
-     public static String secretKey = "BallShopSecretKey";
+     public static String secretKey = "FjzKurokoBlogSecretKey";
      // 代表token的有效时间,这里是两个钟 2 * 60 * 60 * 1000
      public final static long KEEP_TIME = 7200000;
 

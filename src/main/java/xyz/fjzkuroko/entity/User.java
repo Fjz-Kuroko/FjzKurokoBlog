@@ -10,6 +10,7 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private int id;
     @NotNull(message = "用户名不能为空")
     private String username;
     @Pattern(regexp = "[男女]", message = "性别只能为男或女，且不能为空")
@@ -24,7 +25,9 @@ public class User implements Serializable {
 
     public User(){}
 
-    public User(String username, String sex, String password, String email, String info, String avatar, Timestamp registerTime) {
+    public User(int id, String username, String sex, String password, String email,
+                String info, String avatar, Timestamp registerTime) {
+        this.id = id;
         this.username = username;
         this.sex = sex;
         this.password = password;
@@ -37,7 +40,8 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User{" +
-                "username='" + username + '\'' +
+                "id=" + id +
+                ", username='" + username + '\'' +
                 ", sex='" + sex + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
@@ -47,8 +51,12 @@ public class User implements Serializable {
                 '}';
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {

@@ -17,4 +17,12 @@
     <select id="selectByUsername" parameterType="String" resultType="User">
         select * from user where username = #{username}
     </select>
+    <!-- 根据username查询评论用户 -->
+    <select id="selectCommentUserByUsername" parameterType="String" resultType="xyz.fjzkuroko.vo.CommentUser">
+        select uid as id, username as nickName, avatar from user where username = #{username}
+    </select>
+    <!-- 根据uid获取username -->
+    <select id="getUsernameByUid" parameterType="Integer" resultType="String">
+        select username from user where uid = #{uid}
+    </select>
 </mapper>

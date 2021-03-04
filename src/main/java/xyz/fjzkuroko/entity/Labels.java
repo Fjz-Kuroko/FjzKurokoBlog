@@ -2,6 +2,8 @@ package xyz.fjzkuroko.entity;
 
 public class Labels {
 
+    private static final long serialVersionUID = 5L;
+
     private int lid;
     private String label;
 

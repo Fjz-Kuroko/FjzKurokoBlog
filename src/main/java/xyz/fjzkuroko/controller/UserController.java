@@ -6,12 +6,14 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.fjzkuroko.dto.ResponseData;
 import xyz.fjzkuroko.dto.ResponseMessage;
 import xyz.fjzkuroko.entity.User;
 import xyz.fjzkuroko.service.UserService;
 import xyz.fjzkuroko.util.EhcacheUtil;
 import xyz.fjzkuroko.util.JWTUtil;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +39,7 @@ public class UserController {
         User login = userService.login(user);
         if (login != null) {
             // 生成token
-            String token = JWTUtil.generateToken(login.getUsername(), "BallShopIssuer", login.getEmail());
+            String token = JWTUtil.generateToken(login.getUsername(), "FjzKurokoBlogIssuer", login.getEmail());
             Map<String, Object> map = new HashMap<>(2);
             login.setPassword("******");
             map.put("user", login);
@@ -97,6 +99,22 @@ public class UserController {
             return ResponseMessage.newErrorInstance("用户不存在！");
         }
         return ResponseMessage.newOkInstance(user);
+    }
+
+    @PostMapping("/isLogin")
+    public ResponseData isLogin(String username, HttpServletRequest request) {
+        ResponseData responseData = ResponseData.customerError();
+        if (username == null || "".equals(username)) {
+            responseData.putDataValue("msg", "用户名不能为空！");
+            return responseData;
+        }
+        if (!JWTUtil.verifyId(username, request)) {
+            responseData.putDataValue("msg", "验证错误！请重新登录!");
+            return responseData;
+        }
+        responseData = ResponseData.ok();
+        responseData.putDataValue("msg", "已登录");
+        return responseData;
     }
 
 }

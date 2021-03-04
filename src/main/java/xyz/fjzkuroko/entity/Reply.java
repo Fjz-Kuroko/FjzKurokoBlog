@@ -1,5 +1,6 @@
 package xyz.fjzkuroko.entity;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -8,20 +9,25 @@ public class Reply implements Serializable {
     private static final long serialVersionUID = 4L;
 
     private int rid;
+    @NotNull(message = "父级评论id不能为空")
     private int cid;
+    private String cusername;
+    @NotNull(message = "评论者名字不能为空")
     private String username;
+    @NotNull(message = "评论内容不能为空")
     private String content;
-    private Timestamp time;
+    private Timestamp createDate;
     private int likesNum;
 
     public Reply(){}
 
-    public Reply(int rid, int cid, String username, String content, Timestamp time, int likesNum) {
+    public Reply(int rid, int cid, String cusername, String username, String content, Timestamp createDate, int likesNum) {
         this.rid = rid;
         this.cid = cid;
+        this.cusername = cusername;
         this.username = username;
         this.content = content;
-        this.time = time;
+        this.createDate = createDate;
         this.likesNum = likesNum;
     }
 
@@ -30,9 +36,10 @@ public class Reply implements Serializable {
         return "Reply{" +
                 "rid=" + rid +
                 ", cid=" + cid +
+                ", cusername='" + cusername + '\'' +
                 ", username='" + username + '\'' +
                 ", content='" + content + '\'' +
-                ", time=" + time +
+                ", createDate=" + createDate +
                 ", likesNum=" + likesNum +
                 '}';
     }
@@ -57,6 +64,14 @@ public class Reply implements Serializable {
         this.cid = cid;
     }
 
+    public String getCusername() {
+        return cusername;
+    }
+
+    public void setCusername(String cusername) {
+        this.cusername = cusername;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -73,12 +88,12 @@ public class Reply implements Serializable {
         this.content = content;
     }
 
-    public Timestamp getTime() {
-        return time;
+    public Timestamp getCreateDate() {
+        return createDate;
     }
 
-    public void setTime(Timestamp time) {
-        this.time = time;
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
     }
 
     public int getLikesNum() {

@@ -1,5 +1,6 @@
 package xyz.fjzkuroko.entity;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -8,20 +9,23 @@ public class Comment implements Serializable {
     private static final long serialVersionUID = 3L;
 
     private int cid;
+    @NotNull(message = "用户名不能为空")
     private String username;
+    @NotNull(message = "所评论文章id不能为空")
     private int aid;
+    @NotNull(message = "评论内容不能为空")
     private String content;
-    private Timestamp time;
+    private Timestamp createDate;
     private int likesNum;
 
     public Comment(){}
 
-    public Comment(int cid, String username, int aid, String content, Timestamp time, int likesNum) {
+    public Comment(int cid, String username, int aid, String content, Timestamp createDate, int likesNum) {
         this.cid = cid;
         this.username = username;
         this.aid = aid;
         this.content = content;
-        this.time = time;
+        this.createDate = createDate;
         this.likesNum = likesNum;
     }
 
@@ -32,7 +36,7 @@ public class Comment implements Serializable {
                 ", username='" + username + '\'' +
                 ", aid=" + aid +
                 ", content='" + content + '\'' +
-                ", time=" + time +
+                ", createDate=" + createDate +
                 ", likesNum=" + likesNum +
                 '}';
     }
@@ -73,12 +77,12 @@ public class Comment implements Serializable {
         this.content = content;
     }
 
-    public Timestamp getTime() {
-        return time;
+    public Timestamp getCreateDate() {
+        return createDate;
     }
 
-    public void setTime(Timestamp time) {
-        this.time = time;
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
     }
 
     public int getLikesNum() {

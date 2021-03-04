@@ -7,6 +7,9 @@ import xyz.fjzkuroko.entity.User;
 import xyz.fjzkuroko.service.UserService;
 import xyz.fjzkuroko.util.MD5Util;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
@@ -25,6 +28,7 @@ public class UserServiceImpl implements UserService {
             return -1;
         }
         user.setPassword(MD5Util.getMD5Pwd(user.getPassword(), user.getUsername()));
+        user.setRegisterTime(new Timestamp(new Date().getTime()));
         return userDao.register(user);
     }
 

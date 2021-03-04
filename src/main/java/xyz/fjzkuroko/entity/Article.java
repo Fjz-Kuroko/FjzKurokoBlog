@@ -17,11 +17,12 @@ public class Article implements Serializable {
     private int visited;
     private Timestamp articleTime;
     private int likesNum;
+    private String tags;
 
     public Article(){}
 
     public Article(int aid, String author, String title, String content, String articleBrief,
-                   String articleImg, int label, int visited, Timestamp articleTime, int likesNum) {
+                   String articleImg, int label, int visited, Timestamp articleTime, int likesNum, String tags) {
         this.aid = aid;
         this.author = author;
         this.title = title;
@@ -32,6 +33,7 @@ public class Article implements Serializable {
         this.visited = visited;
         this.articleTime = articleTime;
         this.likesNum = likesNum;
+        this.tags = tags;
     }
 
     @Override
@@ -47,11 +49,8 @@ public class Article implements Serializable {
                 ", visited=" + visited +
                 ", articleTime=" + articleTime +
                 ", likesNum=" + likesNum +
+                ", tags='" + tags + '\'' +
                 '}';
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public int getAid() {
@@ -132,5 +131,13 @@ public class Article implements Serializable {
 
     public void setLikesNum(int likesNum) {
         this.likesNum = likesNum;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 }
